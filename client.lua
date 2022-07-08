@@ -51,7 +51,7 @@ end)
 
 -- Target to process
 Citizen.CreateThread(function ()
-    exports['qb-target']:AddBoxZone("ProcessoWeed", vector3(1145.66, -1659.84, 36.61), 5, 1, {
+    exports['qb-target']:AddBoxZone("ProcessWeed", vector3(1145.66, -1659.84, 36.61), 5, 1, {
         name = "ProcessoWeed",
         heading = 30,
         debugPoly = false,
