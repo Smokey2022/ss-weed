@@ -5,32 +5,36 @@ local weedPlants = {}
 -- Process Event
 RegisterNetEvent('ss-weed:client:StartProcess', function()
     local playerPed = PlayerPedId()
-    QBCore.Functions.Progressbar("WeedProcess1", "STARTING PROCESS...", 5000, false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {
-        animDict = "mini@repair",
-        anim = "fixing_a_player",
-        flags = 16,
-    }, {}, {}, function()
-        StopAnimTask(ped, dict, "machinic_loop_mechandplayer", 1.0)
-        TriggerServerEvent("ss-weed:server:ProcessWeed")
-        ClearPedTasks(playerPed)
-    end)
+	QBCore.Functions.TriggerCallback('ss-weed:server:hasItemsToProcess', function(HasItems)  
+		if HasItems then
+			QBCore.Functions.Progressbar("WeedProcess1", "STARTING PROCESS...", 5000, false, true, {
+				disableMovement = true,
+				disableCarMovement = true,
+				disableMouse = false,
+				disableCombat = true,
+			}, {
+				animDict = "mini@repair",
+				anim = "fixing_a_player",
+				flags = 16,
+			}, {}, {}, function()
+				StopAnimTask(ped, dict, "machinic_loop_mechandplayer", 1.0)
+				TriggerServerEvent("ss-weed:server:iDidProcess")
+				ClearPedTasks(playerPed)
+			end)
+		else
+			QBCore.Functions.Notify('You do not have the rigth items...', 'error', 3500)
+		end
+	end)
 end)
 
 -- Process Menu
 RegisterNetEvent('ss-weed:client:MenuProcessWeed', function()
     exports['qb-menu']:openMenu({
         {
-            id = 1,
             header = "Processing Table",
-            txt = ""
+			isHeader = true,
         },
         {
-            id = 2,
             header = "Process Weed",
             txt = "Needed: <br> 2 - Empty Bags <br> 1 - Raw Skunk",
             params = {
@@ -38,9 +42,7 @@ RegisterNetEvent('ss-weed:client:MenuProcessWeed', function()
             }
         },
         {
-            id = 6,
             header = "< Close",
-            txt = "",
             params = {
                 event = "qb-menu:closeMenu",
             }
@@ -51,21 +53,9 @@ end)
 
 -- Target to process
 Citizen.CreateThread(function ()
-    exports['qb-target']:AddBoxZone("ProcessWeed", vector3(1145.66, -1659.84, 36.61), 5, 1, {
-        name = "ProcessoWeed",
-        heading = 30,
-        debugPoly = false,
-    }, {
-        options = {
-            {
-                type = "Client",
-                event = "ss-weed:client:MenuProcessWeed",
-                icon = "fas fa-leaf",
-                label = "Process Weed",
-            },
-        },
-        distance = 2.5
-    })
+	exports['qb-target']:AddBoxZone("CookiesPickLondonPoundCake", Config.WeedProcessing.coords, Config.WeedProcessing.length, Config.WeedProcessing.width, {
+		name = "CookiesPickLondonPoundCake", heading = Config.WeedProcessing.heading, debugPoly = Config.WeedProcessing.debug, minZ = Config.WeedProcessing.minz, maxZ = Config.WeedProcessing.maxz,
+		}, { options = {{ event = "ss-weed:client:MenuProcessWeed", icon = "fas fa-leaf", label = "Process Weed" },}, Config.WeedProcessing.distance, })
 end)
 
 -- Pick Plants
