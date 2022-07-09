@@ -5,21 +5,31 @@ QBCore.Functions.CreateUseableItem('weed_table', function(source, item)
     TriggerClientEvent('ss-weed:client:PlaceTable', source)
 end)
 
--- Process Event
-RegisterNetEvent('ss-weed:server:ProcessWeed', function()
+
+QBCore.Functions.CreateCallback('ss-weed:server:hasItemsToProcess', function(source, cb)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local weed_leaf = Player.Functions.GetItemByName('skunk')
-    local coke_empty_bags = Player.Functions.GetItemByName('coke_empty_bags')
-    if weed_leaf ~= nil and coke_empty_bags ~= nil and coke_empty_bags.amount >= 2 and weed_leaf.amount >= 1 then
-
-        Player.Functions.RemoveItem('skunk', 1)
-        Player.Functions.RemoveItem('coke_empty_bags', 2)
-        Player.Functions.AddItem('weed_skunk', 2)
-        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['weed_skunk'], "add")
+    local Item = Player.Functions.GetItemByName("skunk") and Player.Functions.GetItemByName("coke_empty_bags")
+    if Item ~= nil and Player.Functions.GetItemByName("skunk").amount >= 1 and Player.Functions.GetItemByName("coke_empty_bags").amount >= 2 then
+        cb(true)
     else
-        TriggerClientEvent("QBCore:Notify", src, "You do not have the rigth items...", "error")
-        end
+        cb(false)
+    end
+end)
+
+-- Process Event
+
+RegisterServerEvent("ss-weed:server:iDidProcess", function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player then
+        Player.Functions.RemoveItem("skunk", 1)
+        Player.Functions.RemoveItem("coke_empty_bags", 2)
+        Player.Functions.AddItem("weed_skunk", 2)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['weed_skunk'], "add", 2)
+    else
+        DropPlayer(src, "Attempted exploit abuse")
+    end
 end)
 
 -- Get Weed
