@@ -27,6 +27,7 @@ Please consider supporting ❤
 	["skunk"] 				 	 = {["name"] = "skunk", 			  			["label"] = "Raw Skunk", 						["weight"] = 100, 	["type"] = "item", 		["image"] = "skunk.png", 					["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Raw skunk weed!"},
 	["weed_skunk"] 				 	 = {["name"] = "weed_skunk", 			  			["label"] = "Skunk 2g", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "weed_skunk.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Strong weed!"},
 	["coke_empty_bags"] 				 	 	 = {["name"] = "coke_empty_bags", 			  			["label"] = "Empty Bags", 					["weight"] = 100, 		["type"] = "item", 		["image"] = "coke_empty_bags.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Ziploc bags!"},
+["trowel"] = {['name'] = 'trowel',['label'] = 'Trowel', ['weight'] = 1000, 		['type'] = 'item', 		['image'] = 'trowel.png', 						['unique'] = false,    	['useable'] = true, 	['shouldClose'] = true,	   		['combinable'] = nil,   ['description'] = 'Small handheld garden shovel'},
 
 3. Add the images (in ss-weed/imgs) to qb-inventory/html/images
 
