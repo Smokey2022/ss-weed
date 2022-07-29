@@ -53,8 +53,8 @@ end)
 
 -- Target to process
 Citizen.CreateThread(function ()
-	exports['qb-target']:AddBoxZone("CookiesPickLondonPoundCake", Config.WeedProcessing.coords, Config.WeedProcessing.length, Config.WeedProcessing.width, {
-		name = "CookiesPickLondonPoundCake", heading = Config.WeedProcessing.heading, debugPoly = Config.WeedProcessing.debug, minZ = Config.WeedProcessing.minz, maxZ = Config.WeedProcessing.maxz,
+	exports['qb-target']:AddBoxZone("ProcessWeed", Config.WeedProcessing.coords, Config.WeedProcessing.length, Config.WeedProcessing.width, {
+		name = "ProcessWeed", heading = Config.WeedProcessing.heading, debugPoly = Config.WeedProcessing.debug, minZ = Config.WeedProcessing.minz, maxZ = Config.WeedProcessing.maxz,
 		}, { options = {{ event = "ss-weed:client:MenuProcessWeed", icon = "fas fa-leaf", label = "Process Weed" },}, Config.WeedProcessing.distance, })
 end)
 
